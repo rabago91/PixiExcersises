@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Displacement map from JS gradient ramp</title>
+    <script src="js/pixi.min.js"></script>
+
+    <script>
+        window.onload = function() {
+            var app = new PIXI.Application(
+                {
+                    width: 800,
+                    height: 600,
+                    backgroundColor: 0x000000
+                }
+            );
+            document.body.appendChild(app.view);
+        
+        // app.stage.interactive = true;
+        
+        var container = new PIXI.Container();
+        app.stage.addChild(container);
+
+        
+        var flag = PIXI.Sprite.fromImage('src/Sprites/sampleText.png');
+        container.addChild(flag);
+        flag.x = 200;
+        flag.y = 100;
+        
+        var displacementSprite = PIXI.Sprite.fromImage('src/Sprites/displacement_map_repeat2.jpg');
+        // // Make sure the sprite is wrapping.
+        displacementSprite.texture.baseTexture.wrapMode = PIXI.WRAP_MODES.REPEAT;
+        var displacementFilter = new PIXI.filters.DisplacementFilter(displacementSprite);
+        displacementFilter.padding = 25;
+        
+        displacementSprite.position = flag.position;
+        
+        app.stage.addChild(displacementSprite);
+        
+        flag.filters = [displacementFilter];
+        
+        displacementFilter.scale.x = 1; //30
+        displacementFilter.scale.y = 50; //60
+        
+        app.ticker.add(function() {
+            // Offset the sprite position to make vFilterCoord update to larger value. Repeat wrapping makes sure there's still pixels on the coordinates.
+            displacementSprite.x++;
+            // Reset x to 0 when it's over width to keep values from going to very huge numbers.
+            if (displacementSprite.x > displacementSprite.width) displacementSprite.x = 0;
+        });
+        }
+        </script>
+</head>
+
+<body>
+    <div id="keys"></div>
+</body>
+
+</html>

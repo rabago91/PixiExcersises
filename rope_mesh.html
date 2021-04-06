@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rope effect</title>
+    <script src="js/pixi.min.js"></script>
+
+    <script>
+        window.onload = function() {
+            var app = new PIXI.Application(
+                {
+                    width: 700,
+                    height: 600,
+                    backgroundColor: 0x000000
+                }
+            );
+            document.body.appendChild(app.view);
+
+            var phase = 0;
+
+            // build a rope!
+            var ropeDivitions = 60;
+
+            var ropeLength = 500 / ropeDivitions;
+
+            var points = [];
+
+            for (var i = 0; i < ropeDivitions; i++) {
+                points.push(new PIXI.Point(i * ropeLength, 0));
+            }
+
+            var strip = new PIXI.mesh.Rope(PIXI.Texture.fromImage('src/Sprites/sampleText.png'), points);
+
+            strip.x = -450;
+
+            var snakeContainer = new PIXI.Container();
+            snakeContainer.x = 530;
+            snakeContainer.y = 300;
+
+            snakeContainer.scale.set(.9);
+            app.stage.addChild(snakeContainer);
+
+            snakeContainer.addChild(strip);
+
+            app.ticker.add(function() {
+                phase += .1;
+
+                // make the snake
+                for (var i = 0; i < points.length; i++) {
+                    points[i].y = Math.sin((i * .2) + phase) * 30;
+                    // points[i].y = Math.sin((i * 0.5) + phase) * 30;
+                    points[i].x = i * ropeLength + Math.cos((i * 0) + phase) * 20;
+                    // points[i].x = i * ropeLength + Math.cos((i * 0.3) + phase) * 20;
+                }
+            });
+        }
+    </script>
+
+</head>
+
+<body>
+    <div id="keys"></div>
+</body>
+
+</html>

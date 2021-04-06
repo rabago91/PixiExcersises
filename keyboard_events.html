@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PIXI Testing - Keyboard Movement</title>
+    <script src="js/pixi.js"></script>
+    <script>
+        let app;
+        let player;
+        let keys = {};
+        let keysDiv;
+
+        window.onload = function() {
+            app = new PIXI.Application(
+                {
+                    width: 800,
+                    height: 600,
+                    backgroundColor: 0xF4F8D0
+                }
+            );
+
+            document.body.appendChild(app.view);
+
+            //player object
+            player = new PIXI.Sprite.from("src/images/player.png");
+            player.anchor.set(0.5);
+            player.x = app.view.width / 2;
+            player.y = app.view.height / 2;
+
+            app.stage.addChild(player);
+
+            //keyboard event handlers
+            window.addEventListener("keydown", keysDown);
+            window.addEventListener("keyup", KeysUp);
+
+            app.ticker.add(gameloop);
+
+            keysDiv = document.querySelector("#keys");
+        }
+
+        function keysDown(e) {
+            // console.log(e.keyCode);
+            keys[e.keyCode] = true;
+        }
+
+        function KeysUp(e) {
+            // console.log(e.keyCode);
+            keys[e.keyCode] = false;
+        }
+
+        function gameloop() {
+            keysDiv.innerHTML = JSON.stringify(keys);
+
+            if(keys["39"]) { //Rigth
+                player.x += 5;
+            }
+
+            if(keys["37"]) { //Left
+                player.x -= 5;
+            }
+
+            if(keys["38"]) { //Up
+                player.y -= 5;
+            }
+
+            if(keys["40"]) { //Down
+                player.y += 5;
+            }
+        }
+    </script>
+</head>
+<body>
+<div id="keys"></div>
+</body>
+</html>

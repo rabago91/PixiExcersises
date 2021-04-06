@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PIXI Testing - CSS Font</title>
+    <style>
+        @font-face {
+            font-family: "pixelFont";
+            src: url("font/8-bit-Limit-\(BRK\).ttf");
+        }
+        #useFont{
+            font-family: "pixelFont";
+            font-size: 0pt;
+        }
+    </style>
+    <script src="js/pixi.js"></script>
+    <script>
+        let app;
+        let player;
+        let bullets = [];
+        let bulletSpeed = 10;
+
+        window.onload = function () {
+            app = new PIXI.Application(
+                {
+                    width: 800,
+                    height: 600,
+                    backgroundColor: 0xD0E046
+                }
+            );
+
+            document.body.appendChild(app.view);
+
+            text1 = new PIXI.Text("Welcome to\n\nYour Doom!");
+            text1.x = app.view.width / 2;
+            text1.y = app.view.height / 2;
+            text1.anchor.set(0.5);
+            text1.style = new PIXI.TextStyle({
+                fill: 0xFF0000,
+                fontSize: 40,
+                fontFamily: "pixelFont",
+            });
+            app.stage.addChild(text1)
+        }
+    </script>
+</head>
+
+<body>
+    <div id="useFont">test</div>
+</body>
+
+</html>

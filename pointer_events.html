@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pointer Events 1</title>
+    <script src="js/pixi.min.js"></script>
+    <script>
+        let app;
+        let pointerIsDown = false;
+        let pointerIsOver = false;
+        const NORMAL = 0xFFFFFF;
+        const OVER = 0x00FF00;
+        const DOWN = 0xFF0000;
+
+        window.onload = function () {
+            app = new PIXI.Application(
+                {
+                    width: 800,
+                    height: 600,
+                    backgroundColor: 0xAAAAAA
+                }
+            );
+
+            document.querySelector("#gameDiv").appendChild(app.view);
+
+            let rect = new PIXI.Graphics();
+            rect.beginFill(NORMAL);
+            rect.drawRect((app.view.width / 2) - 100, (app.view.height / 2) - 100, 200, 200);
+            rect.endFill();
+            rect.interactive = true;
+            rect.buttonMode = true;
+            rect.on("pointerup", doPointerUp);
+            rect.on("pointerdown", doPointerDown);
+            rect.on("pointerover", doPointerOver);
+            rect.on("pointerout", doPointerOut);
+            rect.on("pointerupoutside", doPointerUpOutside);
+
+            app.stage.addChild(rect);
+
+            app.ticker.add(gameLoop);
+        }
+
+        function gameLoop(delta) { }
+
+        function doPointerUp() {
+            // console.log("UP!")
+            if (pointerIsOver) {
+                this.tint = OVER;
+            } else {
+                this.tint = NORMAL;
+            }
+            pointerIsDown = false;
+        }
+        function doPointerDown() {
+            // console.log("DOWN!")
+            this.tint = DOWN;
+            pointerIsDown = true;
+        }
+        function doPointerOver() {
+            // console.log("OVER")
+            if (!pointerIsOver) {
+                this.tint = OVER;
+                pointerIsOver = true;
+            }
+        }
+        function doPointerOut() {
+            // console.log("OUT!")
+            if (!pointerIsDown) {
+                this.tint = NORMAL;
+                pointerIsOver = false;
+            }
+        }
+
+        function doPointerUpOutside(){
+            this.tint = NORMAL;
+            pointerIsOver = false;
+            pointerIsDown = false;
+        }
+
+
+    </script>
+</head>
+
+<body>
+    <div id="gameDiv"></div>
+</body>
+
+</html>

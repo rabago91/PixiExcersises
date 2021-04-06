@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>containers</title>
+    <script src="js/pixi.min.js"></script>
+    <script>
+        let app;
+        let titleScreen;
+        let mainScreen;
+        let endScreen;
+
+        window.onload = function () {
+            app = new PIXI.Application(
+                {
+                    width: 800,
+                    height: 600,
+                    backgroundColor: 0xAAAAAA
+                }
+            );
+
+            document.body.appendChild(app.view);
+            window.addEventListener("keyup", switchContainer);
+
+            // create our screens
+            titleScreen = new PIXI.Container();
+            mainScreen = new PIXI.Container();
+            endScreen = new PIXI.Container();
+
+            mainScreen.visible = false;
+            endScreen.visible = false;
+
+            app.stage.addChild(titleScreen);
+            app.stage.addChild(mainScreen);
+            app.stage.addChild(endScreen);
+
+            //setup title screen
+            let yellowRect = new PIXI.Graphics();
+            yellowRect.beginFill(0xFFFF00);
+            yellowRect.drawRect(0, 0, app.view.width, app.view.height);
+            titleScreen.addChild(yellowRect);
+
+            let text1 = new PIXI.Text("TE");
+            text1.anchor.set(0.5);
+            text1.x = app.view.width / 2;
+            text1.y = app.view.height / 2;
+            text1.style = new PIXI.TextStyle({
+                fill: 0xBBBBBB,
+                fontsize: 40,
+                fontFamily: "Arial",
+                fontStyle: "bold",
+                stroke: 0x000000,
+                strokeThickness: 3
+            })
+            titleScreen.addChild(text1);
+
+            //setup main screen
+            let cyanRect = new PIXI.Graphics();
+            cyanRect.beginFill(0x00FFFF);
+            cyanRect.drawRect(0, 0, app.view.width, app.view.height);
+            mainScreen.addChild(cyanRect);
+
+            let text2 = new PIXI.Text("AMO");
+            text2.anchor.set(0.5);
+            text2.x = app.view.width / 2;
+            text2.y = app.view.height / 2;
+            text2.style = new PIXI.TextStyle({
+                fill: 0xBBBBBB,
+                fontsize: 40,
+                fontFamily: "Arial",
+                fontStyle: "bold",
+                stroke: 0x000000,
+                strokeThickness: 3
+            })
+            mainScreen.addChild(text2);
+
+            //setup end screen
+            let magentaRect = new PIXI.Graphics();
+            magentaRect.beginFill(0xFF00FF);
+            magentaRect.drawRect(0, 0, app.view.width, app.view.height);
+            endScreen.addChild(magentaRect);
+
+            let text3 = new PIXI.Text("DIVINURA");
+            text3.anchor.set(0.5);
+            text3.x = app.view.width / 2;
+            text3.y = app.view.height / 2;
+            text3.style = new PIXI.TextStyle({
+                fill: 0xBBBBBB,
+                fontsize: 40,
+                fontFamily: "Arial",
+                fontStyle: "bold",
+                stroke: 0x000000,
+                strokeThickness: 3
+            })
+            endScreen.addChild(text3);
+
+        }
+
+
+        function switchContainer(e) {
+            // console.log(e.keyCode)
+            switch (e.key) {
+                case "1":
+                    titleScreen.visible = true;
+                    mainScreen.visible = false;
+                    endScreen.visible = false;
+                    break;
+                case "2":
+                    titleScreen.visible = false;
+                    mainScreen.visible = true;
+                    endScreen.visible = false;
+                    break;
+                case "3":
+                    titleScreen.visible = false;
+                    mainScreen.visible = false;
+                    endScreen.visible = true;
+                    break;
+            }
+
+        }
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>

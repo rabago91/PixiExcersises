@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mouse follower</title>
+    <script src="js/pixi.js"></script>
+    <script>
+        let app;
+        let player;
+
+        window.onload = function() {
+            app = new PIXI.Application(
+                {
+                    width: 800,
+                    height: 600,
+                    backgroundColor: 0xF4F8D0
+                }
+            );
+
+            document.body.appendChild(app.view);
+
+            player = new PIXI.Sprite.from("src/images/player.png");
+            player.anchor.set(0.5);
+            player.x = app.view.width / 2;
+            player.y = app.view.height / 2;
+
+            app.stage.addChild(player);
+
+            //mouse interactions
+            app.stage.interactive = true;
+            app.stage.on("pointermove", movePlayer);
+
+            function movePlayer(e) {
+                let pos = e.data.global;
+
+                player.x = pos.x;
+                player.y = pos.y;
+            }
+        }
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
